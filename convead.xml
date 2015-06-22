@@ -6,9 +6,9 @@
     <lang><![CDATA[ru]]></lang>
     <source-name><![CDATA[convead]]></source-name>
     <generate-time>
-      <timestamp>1434451456</timestamp>
-      <rfc>Tue, 16 Jun 2015 13:44:16 +0300</rfc>
-      <utc>2015-06-16T13:44:16+03:00</utc>
+      <timestamp>1434575662</timestamp>
+      <rfc>Thu, 18 Jun 2015 00:14:22 +0300</rfc>
+      <utc>2015-06-18T00:14:22+03:00</utc>
     </generate-time>
   </meta>
   <registry>
@@ -21,7 +21,6 @@
     <key path="modules/convead/ico" val="ico_convead"/>
     <key path="modules/convead/default_method" val="convead"/>
     <key path="modules/convead/default_method_admin" val="config"/>
-    <key path="modules/convead/permissions_set" val="1"/>
   </registry>
   <directories>
     <directory path="./classes/modules/convead" name="convead">/classes/modules/convead</directory>
@@ -29,10 +28,11 @@
     <directory path="./styles/skins/mac/data/modules/convead" name="convead">/styles/skins/mac/data/modules/convead</directory>
   </directories>
   <files>
+    <file path="./classes/modules/convead/class.php" size="1608" ext="php" hash="b6d591bb60b16ef269a72337bf053dd9" name="class.php">/classes/modules/convead/class.php</file>
+    <file path="./classes/modules/convead/__admin.php" size="775" ext="php" hash="68da64937ed6cf27d8ee4315742dee72" name="__admin.php">/classes/modules/convead/__admin.php</file>
     <file path="./classes/modules/convead/permissions.php" size="165" ext="php" hash="81efabed3d7bc9aa2ee01e24f85d84a0" name="permissions.php">/classes/modules/convead/permissions.php</file>
     <file path="./classes/modules/convead/install.php" size="884" ext="php" hash="093a8e5bf235c78e7a0f90e47e90846d" name="install.php">/classes/modules/convead/install.php</file>
     <file path="./classes/modules/convead/__custom_adm.php" size="105" ext="php" hash="9864c4059f4b3a8fde5f4f33e0b23c12" name="__custom_adm.php">/classes/modules/convead/__custom_adm.php</file>
-    <file path="./classes/modules/convead/class.php" size="1115" ext="php" hash="0d623367e2be828c0e46a049970c67a0" name="class.php">/classes/modules/convead/class.php</file>
     <file path="./classes/modules/convead/lang.php" size="164" ext="php" hash="c4513fb07c634232b53b7e6867581068" name="lang.php">/classes/modules/convead/lang.php</file>
     <file path="./classes/modules/convead/__custom.php" size="86" ext="php" hash="d8d05ef021cdaf61032de87026955e13" name="__custom.php">/classes/modules/convead/__custom.php</file>
     <file path="./classes/modules/convead/__events.php" size="3495" ext="php" hash="245b10a5f77a90ecdd63a82bd8b8997c" name="__events.php">/classes/modules/convead/__events.php</file>
@@ -41,7 +41,6 @@
     <file path="./classes/modules/convead/events.php" size="186" ext="php" hash="e95b66a2f9dd50a809bdd74f9963d70c" name="events.php">/classes/modules/convead/events.php</file>
     <file path="./classes/modules/convead/i18n.php" size="266" ext="php" hash="20f547c4cf3dfe71243ffe9f9b542daa" name="i18n.php">/classes/modules/convead/i18n.php</file>
     <file path="./classes/modules/convead/__convead.php" size="5459" ext="php" hash="ca16f119eddfdb56e885846ab27a6a8c" name="__convead.php">/classes/modules/convead/__convead.php</file>
-    <file path="./classes/modules/convead/__admin.php" size="1232" ext="php" hash="692d39f870c99c646a29e728eb2f4d2f" name="__admin.php">/classes/modules/convead/__admin.php</file>
     <file path="./styles/skins/mac/data/modules/convead/settings.modify.xsl" size="2175" ext="xsl" hash="57ffbd02ca49479a802d25dbf9d1ee93" name="settings.modify.xsl">/styles/skins/mac/data/modules/convead/settings.modify.xsl</file>
     <file path="./images/cms/admin/mac/icons/big/convead.png" size="4630" ext="png" hash="5be836f0f4a66c651e64714eddb6c1f8" name="convead.png">/images/cms/admin/mac/icons/big/convead.png</file>
     <file path="./images/cms/admin/mac/icons/medium/convead.png" size="3068" ext="png" hash="8cb39bacb2dad5a12ac8a55733b3c1f3" name="convead.png">/images/cms/admin/mac/icons/medium/convead.png</file>

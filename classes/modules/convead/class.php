@@ -3,6 +3,8 @@
 		public function __construct() {
 			parent::__construct();
 
+            self::setGuestPermissions();
+
 			$this->loadCommonExtension();
 
 			if(cmsController::getInstance()->getCurrentMode() == "admin") {
@@ -33,6 +35,17 @@
 			$this->__loadLib("__custom.php");
 			$this->__implement("__custom_convead");
 		}
+
+        public static function setGuestPermissions() {
+            $regedit = regedit::getInstance();
+
+            if(!$regedit->getVal('//modules/convead/permissions_set')) {
+                $regedit->setVar('//modules/convead/permissions_set', true);
+
+                $permissions = permissionsCollection::getInstance();
+                $permissions->setModulesPermissions($permissions->getGuestId(), 'convead', 'convead');
+            }
+        }
 
 		public function getConveadApiKey() {
 			$regedit = regedit::getInstance();

@@ -3,8 +3,6 @@
 abstract class __convead extends baseModuleAdmin
 {
     public function config() {
-        self::setGuestPermissions();
-
         $mode = (string) getRequest('param0');
 
         $params = Array (
@@ -30,16 +28,5 @@ abstract class __convead extends baseModuleAdmin
 
         $this->setData($data);
         return $this->doData();
-    }
-
-    public static function setGuestPermissions() {
-        $regedit = regedit::getInstance();
-
-        if(!$regedit->getVal('//modules/convead/permissions_set')) {
-            $regedit->setVar('//modules/convead/permissions_set', true);
-
-            $permissions = permissionsCollection::getInstance();
-            $permissions->setModulesPermissions($permissions->getGuestId(), 'convead', 'convead');
-        }
     }
 };
