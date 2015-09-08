@@ -18,7 +18,7 @@ See English readme [below](#1-system-requirements).
 
 **Вручную через FTP**
 
-1. [Скачайте архив модуля](https://d2p70fm3k6a3cb.cloudfront.net/public/plugins/umi/convead-1.1.0.0.tar) из нашего репозитория.
+1. [Скачайте архив модуля](https://d2p70fm3k6a3cb.cloudfront.net/public/plugins/umi/convead.tar) из нашего репозитория.
 2. Распакуйте архив с модулем и загрузите его содержимое через FTP в корень вашего сайта. Замените все существующие файлы при необходимости.
 3. Перейдите в раздел «Конфигурация» → «Модули» в административной панели магазина.
 4. Укажите путь до инсталляционного файла: `classes/modules/convead/install.php` и нажмите кнопку «Установить».
@@ -67,7 +67,7 @@ See English readme [below](#1-system-requirements).
 
 **Manually via FTP**
 
-1. [Download module archive](https://d2p70fm3k6a3cb.cloudfront.net/public/plugins/umi/convead-1.1.0.0.tar) from our repository.
+1. [Download module archive](https://d2p70fm3k6a3cb.cloudfront.net/public/plugins/umi/convead.tar) from our repository.
 2. Unpack the archive and upload its contents via FTP to the root folder of your site. Replace all existing files if necessary.
 3. Navigate to the "Configuration" → "Modules" section in admin panel of your shop.
 4. Specify an installation path: `classes/modules/convead/install.php` and press "Install" button.
