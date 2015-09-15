@@ -1,7 +1,5 @@
 <?php
 abstract class __convead_events {
-    static $orderAmount;
-    static $orderPrice;
 
     public function onOrderRefreshConveadUpdateCart(iUmiEventPoint $eventPoint) {
         if($eventPoint->getMode() !== 'after') {
@@ -28,22 +26,6 @@ abstract class __convead_events {
         if(!$api instanceof ConveadTracker) {
             return true;
         }
-
-        $amount = $eventPoint->getParam('totalAmount');
-        $price = $eventPoint->getRef('actualPrice');
-
-        if(is_null(self::$orderAmount) && is_null(self::$orderPrice)) {
-            self::$orderAmount = $amount;
-            self::$orderPrice = $price;
-            return true;
-        }
-
-        if(self::$orderAmount == $amount && self::$orderPrice == $price) {
-            return true;
-        }
-
-        self::$orderAmount = $amount;
-        self::$orderPrice = $price;
 
         $items = $eventPoint->getParam('items');
 
