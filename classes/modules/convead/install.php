@@ -1,7 +1,7 @@
 <?php
 $INFO = Array();
 
-$INFO['version'] = "1.1.2.0";
+$INFO['version'] = "1.1.3.0";
 
 $INFO['name'] = "convead";
 $INFO['filename'] = "modules/convead/class.php";
