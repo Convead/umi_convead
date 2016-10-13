@@ -7,19 +7,19 @@ abstract class __convead extends baseModuleAdmin
 
         $params = Array (
             "convead_config" => Array (
-                "string:api_key" => '',
+                "string:app_key" => '',
             )
         );
 
         if ($mode == "do") {
             $params = $this->expectParams($params);
 
-            $this->setConveadApiKey($params['convead_config']['string:api_key']);
+            $this->setConveadAppKey($params['convead_config']['string:app_key']);
 
             $this->chooseRedirect();
         }
 
-        $params['convead_config']['string:api_key'] = $this->getConveadApiKey();
+        $params['convead_config']['string:app_key'] = $this->getConveadAppKey();
 
         $this->setDataType("settings");
         $this->setActionType("modify");

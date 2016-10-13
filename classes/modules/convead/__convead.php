@@ -1,19 +1,15 @@
 <?php
 abstract class __convead_library {
     public function getConveadScript() {
-        $key = $this->getConveadApiKey();
+        $key = $this->getConveadAppKey();
 
-        if(!$key) {
-            return '';
-        }
+        if(!$key) return '';
 
         $conveadSettings = array();
 
         $visitorData = $this->getConveadVisitorData();
 
-        if($visitorData) {
-            $conveadSettings = array_merge($conveadSettings, $visitorData);
-        }
+        if($visitorData) $conveadSettings = array_merge($conveadSettings, $visitorData);
 
         $conveadSettings['app_key'] = $key;
 
@@ -22,7 +18,7 @@ abstract class __convead_library {
         $script = <<<END
 <script type="text/javascript">
   window.ConveadSettings = $settings;
-  (function(w,d,c){w[c]=w[c]||function(){(w[c].q=w[c].q||[]).push(arguments)};var ts = (+new Date()/86400000|0)*86400;var s = d.createElement('script');s.type = 'text/javascript';s.async = true;s.src = 'https://tracker.convead.io/widgets/'+ts+'/widget-{$key}.js';var x = d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s, x);})(window,document,'convead');
+  (function(w,d,c){w[c]=w[c]||function(){(w[c].q=w[c].q||[]).push(arguments)};var ts = (+new Date()/86400000|0)*86400;var s = d.createElement('script');s.type = 'text/javascript';s.async = true;s.charset = 'utf-8';s.src = 'https://tracker.convead.io/widgets/'+ts+'/widget-{$key}.js';var x = d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s, x);})(window,document,'convead');
 </script>
 END;
 
@@ -136,27 +132,19 @@ END;
 
         $productId = getArrayKey($raw, 'product_id');
 
-        if(!$productId) {
-            return false;
-        }
+        if(!$productId) return false;
 
         $categoryId = getArrayKey($raw, 'category_id');
 
-        if(!$categoryId) {
-            return false;
-        }
+        if(!$categoryId) return false;
 
         $productName = getArrayKey($raw, 'product_name');
 
-        if(!$productName) {
-            return false;
-        }
+        if(!$productName) return false;
 
         $productUrl = getArrayKey($raw, 'product_url');
 
-        if(!$productUrl) {
-            return false;
-        }
+        if(!$productUrl) return false;
 
         return array(
             'product_id' => $productId,
@@ -170,18 +158,77 @@ END;
      * @return bool|ConveadTracker
      */
 
-    public function getConveadApiTracker($visitorUid = false, $visitorInfo = false) {
-        $key = $this->getConveadApiKey();
+    public function getConveadTracker($visitorUid = false, $visitorInfo = false) {
+        $key = $this->getConveadAppKey();
 
-        if(!$key) {
-            return false;
-        }
+        if(!$key) return false;
 
-        require_once 'api/Browser.php';
         require_once 'api/ConveadTracker.php';
 
-        $api = new ConveadTracker($key, $_SERVER['HTTP_HOST'], $_COOKIE['convead_guest_uid'], $visitorUid, $visitorInfo);
+        $tracker = new ConveadTracker($key, $_SERVER['HTTP_HOST'], $_COOKIE['convead_guest_uid'], $visitorUid, $visitorInfo);
 
-        return $api;
+        return $tracker;
     }
+
+    /**
+     * @return bool|ConveadTracker
+     */
+
+    public function getConveadTrackerAnonym() {
+        $key = $this->getConveadAppKey();
+
+        if(!$key) return false;
+
+        require_once 'api/ConveadTracker.php';
+
+        $tracker = new ConveadTracker($key);
+
+        return $tracker;
+    }
+
+    /**
+     * @return state
+     */
+    public function switchState($state) {
+        switch ($state) {
+          case 'waiting':
+            $state = 'new';
+            break;
+          case 'accepted':
+            $state = 'paid';
+            break;
+          case 'ready':
+            $state = 'shipped';
+            break;
+          case 'canceled':
+            $state = 'canceled';
+            break;
+          case 'rejected':
+            $state = 'canceled';
+            break;
+        }
+        return $state;
+    }
+
+    /**
+     * @return orderData
+     */
+    public function getOrderData($order) {
+        $orderData = new stdClass();
+        $items = $order->getItems();
+        $conveadItems = array();
+        foreach($items as $item) {
+            $conveadItems[] = array(
+                'product_id' => $item->getItemElement()->getId(),
+                'qnt' => $item->getAmount(),
+                'price' => $item->getItemPrice(),
+            );
+        }
+        $orderData->items = $conveadItems;
+        $orderData->revenue = $order->getActualPrice();
+        $orderData->order_id = $order->getValue('number');
+        $orderData->state = $this->switchState( order::getCodeByStatus($order->getValue('status_id')) );
+        return $orderData;
+    }
+
 };
