@@ -3,16 +3,14 @@
 		public function __construct() {
 			parent::__construct();
 
-            self::setGuestPermissions();
+      self::setGuestPermissions();
 
 			$this->loadCommonExtension();
 
 			if(cmsController::getInstance()->getCurrentMode() == "admin") {
 				$configTabs = $this->getConfigTabs();
 
-				if ($configTabs) {
-					$configTabs->add("config");
-				}
+				if ($configTabs) $configTabs->add("config");
 
 				$this->__loadLib("__admin.php");
 				$this->__implement("__convead");
@@ -36,27 +34,28 @@
 			$this->__implement("__custom_convead");
 		}
 
-        public static function setGuestPermissions() {
-            $regedit = regedit::getInstance();
+    public static function setGuestPermissions() {
+        $regedit = regedit::getInstance();
 
-            if(!$regedit->getVal('//modules/convead/permissions_set')) {
-                $regedit->setVar('//modules/convead/permissions_set', true);
+        if(!$regedit->getVal('//modules/convead/permissions_set')) {
+            $regedit->setVar('//modules/convead/permissions_set', true);
 
-                $permissions = permissionsCollection::getInstance();
-                $permissions->setModulesPermissions($permissions->getGuestId(), 'convead', 'convead');
-            }
+            $permissions = permissionsCollection::getInstance();
+            $permissions->setModulesPermissions($permissions->getGuestId(), 'convead', 'convead');
         }
+    }
 
-		public function getConveadApiKey() {
-			$regedit = regedit::getInstance();
+		public function getConveadAppKey() {
+  			$regedit = regedit::getInstance();
 
-			return $regedit->getVal('//modules/convead/api_key');
+  			return $regedit->getVal('//modules/convead/app_key');
 		}
 
-		public function setConveadApiKey($key) {
-			$regedit = regedit::getInstance();
+    public function setConveadAppKey($key) {
+        $regedit = regedit::getInstance();
 
-			$regedit->setVar('//modules/convead/api_key', $key);
-		}
+        $regedit->setVar('//modules/convead/app_key', $key);
+    }
+
 	};
 ?>

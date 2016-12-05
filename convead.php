@@ -25,7 +25,7 @@ return array(
             'path' => 'modules/convead',
             'recursive' => true,
             'exclude' => array(
-                'modules/convead/api_key',
+                'modules/convead/app_key',
                 'modules/convead/permissions_set'
             )
         )

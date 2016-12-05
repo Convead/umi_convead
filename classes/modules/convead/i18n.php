@@ -5,7 +5,7 @@ $i18n = Array(
 
 	'header-convead-config' => 'Настройки',
 	'group-convead_config' => 'Настройки',
-	'option-api_key' => 'API-ключ',
+	'option-app_key' => 'APP KEY вашего аккаунта convead',
 
 	'perms-convead-convead' => 'Отправка данных в convead'
 );

@@ -1,9 +1,11 @@
 <?php
-	$permissions = Array(
-		'convead' => array(
-			'getConveadScript',
-			'onOrderRefreshConveadUpdateCart',
-			'onOrderStatusChangedConveadPurchase'
-		),
-	);
+  $permissions = Array(
+    'convead' => array(
+      'getConveadScript',
+      'onOrderRefreshConveadUpdateCart',
+      'onOrderStatusChangedConveadOrderState',
+      'onSystemModifyObjectConvead',
+      'onSystemModifyPropertyValueConvead'
+    ),
+  );
 ?>

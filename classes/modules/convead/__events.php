@@ -2,30 +2,22 @@
 abstract class __convead_events {
 
     public function onOrderRefreshConveadUpdateCart(iUmiEventPoint $eventPoint) {
-        if($eventPoint->getMode() !== 'after') {
-            return true;
-        }
+        if($eventPoint->getMode() !== 'after') return true;
 
         $path = getRequest('path');
 
-        if(!$path || strpos($path, 'emarket/basket/') === false) {
-            return true;
-        }
+        if(!$path || strpos($path, 'emarket/basket/') === false) return true;
 
         $order = $eventPoint->getRef('order');
 
-        if($order->getValue('status_id')) {
-            return true;
-        }
+        if($order->getValue('status_id')) return true;
 
         $permissions = permissionsCollection::getInstance();
         $visitorUid = ($permissions->isAuth()) ? $order->getValue('customer_id') : false;
 
-        $api = $this->getConveadApiTracker($visitorUid);
+        $api = $this->getConveadTracker($visitorUid);
 
-        if(!$api instanceof ConveadTracker) {
-            return true;
-        }
+        if(!$api instanceof ConveadTracker) return true;
 
         $items = $eventPoint->getParam('items');
 
@@ -46,62 +38,80 @@ abstract class __convead_events {
         $api->eventUpdateCart($conveadItems);
     }
 
-    public function onOrderStatusChangedConveadPurchase(iUmiEventPoint $eventPoint) {
-        if($eventPoint->getMode() !== 'after') {
-            return true;
-        }
+    public function onOrderStatusChangedConveadOrderState(iUmiEventPoint $eventPoint) {
+        if($eventPoint->getMode() !== 'after') return true;
 
         $oldStatusId = $eventPoint->getParam('old-status-id');
         $newStatusId = $eventPoint->getParam('new-status-id');
-
-        if(!is_null($oldStatusId) || $newStatusId != order::getStatusByCode('waiting')) {
-            return true;
-        }
-
         $order = $eventPoint->getRef('order');
-        $customerId = $order->getValue('purchaser_one_click');
-        $visitorUid = $order->getCustomerId();
 
-        if(!$customerId) {
-            $customerId = $order->getCustomerId();
+        $state = $this->switchState( order::getCodeByStatus($newStatusId) );
+
+        $orderData = $this->getOrderData($order);
+
+        if(!is_null($oldStatusId) or $newStatusId == order::getStatusByCode('waiting')) {
+            $customerId = $order->getValue('purchaser_one_click');
+            $visitorUid = $order->getCustomerId();
+
+            if(!$customerId) $customerId = $order->getCustomerId();
+
+            $customer = umiObjectsCollection::getInstance()->getObject($customerId);
+
+            if(!$customer) return true;
+
+            $visitorInfo = ($customer) ? $this->getConveadVisitorInfo($customer) : false;
+
+            if(!permissionsCollection::getInstance()->isAuth()) $visitorUid = false;
+
+            $tracker = $this->getConveadTracker($visitorUid, $visitorInfo);
+            if(!$tracker) return true;
+            $tracker->eventOrder($orderData->order_id, $orderData->revenue, $orderData->items, $orderData->state);
         }
-
-        $customer = umiObjectsCollection::getInstance()->getObject($customerId);
-
-        if(!$customer) {
-            return true;
+        else {
+            $tracker = $this->getConveadTrackerAnonym();
+            if(!$tracker) return true;
+            $tracker->webHookOrderUpdate($orderData->order_id, $orderData->state, $orderData->revenue, $orderData->items);
         }
-
-        $visitorInfo = ($customer) ? $this->getConveadVisitorInfo($customer) : false;
-
-        if(!permissionsCollection::getInstance()->isAuth()) {
-            $visitorUid = false;
-        }
-
-        /* @var order $order */
-
-        $api = $this->getConveadApiTracker($visitorUid, $visitorInfo);
-
-        if(!$api instanceof ConveadTracker) {
-            return true;
-        }
-
-        $items = $order->getItems();
-
-        /* @var orderItem[] $items */
-
-        $conveadItems = array();
-
-        foreach($items as $item) {
-            $item = array(
-                'product_id' => $item->getItemElement()->getId(),
-                'qnt' => $item->getAmount(),
-                'price' => $item->getItemPrice(),
-            );
-
-            $conveadItems[] = $item;
-        }
-
-        $api->eventOrder($order->getValue('number'), $order->getActualPrice(), $conveadItems, $visitorInfo);
+        return true;
     }
+    
+    /* изменение статуса на странице заказа */
+    public function onSystemModifyObjectConvead(iUmiEventPoint $event) {  
+        if($event->getMode() !== 'after') return true;
+        
+        $object = $event->getRef('object');
+        
+        if($object instanceof iUmiObject) {
+            $order = order::get($object->getId());
+            $orderData = $this->getOrderData($order);
+
+            #$state = $this->switchState( order::getCodeByStatus($object->getId()) );
+
+            $tracker = $this->getConveadTrackerAnonym();
+            if(!$tracker) return true;
+
+            $tracker->webHookOrderUpdate($orderData->order_id, $orderData->state, $orderData->revenue, $orderData->items);
+        }
+        return true;
+    }
+    
+    /* изменение статуса в списке заказов */
+    public function onSystemModifyPropertyValueConvead(iUmiEventPoint $event) {  
+        if($event->getMode() !== 'after') return true;
+        
+        $entity = $event->getRef('entity');
+
+        if($entity instanceof iUmiObject) {
+            $order = order::get($entity->getId());
+            $orderData = $this->getOrderData($order);
+            #$state = $this->switchState( order::getCodeByStatus($event->getParam("newValue")) );
+
+            $tracker = $this->getConveadTrackerAnonym();
+            if(!$tracker) return true;
+
+            $tracker->webHookOrderUpdate($orderData->order_id, $orderData->state);
+        }
+        return true;
+    }
+
 };
