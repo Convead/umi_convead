@@ -17,13 +17,14 @@ abstract class __convead_events {
 
         $api = $this->getConveadTracker($visitorUid);
 
+        /* блокировать отправку события update_cart для ложных вызовов */
+        if ($api->generated_uid) return false;
+
         if(!$api instanceof ConveadTracker) return true;
 
         $items = $eventPoint->getParam('items');
 
         $conveadItems = array();
-
-        /* @var orderItem[] $items */
 
         foreach ($items as $orderItem) {
             $item = array(
