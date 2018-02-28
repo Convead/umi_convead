@@ -21,7 +21,7 @@ See English readme [below](#1-system-requirements).
 1. [Скачайте архив модуля](https://d2p70fm3k6a3cb.cloudfront.net/public/plugins/umi/convead.tar) из нашего репозитория.
 2. Распакуйте архив с модулем и загрузите его содержимое через FTP в корень вашего сайта. Замените все существующие файлы при необходимости.
 3. Перейдите в раздел «Конфигурация» → «Модули» в административной панели магазина.
-4. Укажите путь до инсталляционного файла: `classes/modules/convead/install.php` и нажмите кнопку «Установить».
+4. Укажите путь до инсталляционного файла: `classes/components/convead/install.php` и нажмите кнопку «Установить».
 
 После установки модуля перейдите на страницу его настройки и впишите в соответствующее поле API-ключ вашего аккаунта Convead.
 
@@ -70,7 +70,7 @@ See English readme [below](#1-system-requirements).
 1. [Download module archive](https://d2p70fm3k6a3cb.cloudfront.net/public/plugins/umi/convead.tar) from our repository.
 2. Unpack the archive and upload its contents via FTP to the root folder of your site. Replace all existing files if necessary.
 3. Navigate to the "Configuration" → "Modules" section in admin panel of your shop.
-4. Specify an installation path: `classes/modules/convead/install.php` and press "Install" button.
+4. Specify an installation path: `classes/components/convead/install.php` and press "Install" button.
 
 After module installation navigate to its setting page and type in your Convead account API-key into a corresponding field.
 

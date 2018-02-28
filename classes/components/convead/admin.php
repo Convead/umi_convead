@@ -1,7 +1,11 @@
 <?php
 
-abstract class __convead extends baseModuleAdmin
-{
+class ConveadAdmin  {
+
+	use baseModuleAdmin;
+	
+	public $module;
+	
     public function config() {
         $mode = (string) getRequest('param0');
 
@@ -29,4 +33,17 @@ abstract class __convead extends baseModuleAdmin
         $this->setData($data);
         return $this->doData();
     }
+    
+	public function getConveadAppKey() {
+		$regedit = regedit::getInstance();
+
+		return $regedit->getVal('//modules/convead/app_key');
+	}
+
+    public function setConveadAppKey($key) {
+        $regedit = regedit::getInstance();
+
+        $regedit->setVar('//modules/convead/app_key', $key);
+    }
+    
 };

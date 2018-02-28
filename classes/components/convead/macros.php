@@ -1,21 +1,27 @@
 <?php
-abstract class __convead_events {
+
+class ConveadMacros {
+
+	public $module;
+
+    public function __construct($module) {
+        $this->module = is_null($this->module) ? $module : $this->module;
+
+        $this->convead = $this->module->getImplementedInstance('ConveadLibrary');
+    }
 
     public function onOrderRefreshConveadUpdateCart(iUmiEventPoint $eventPoint) {
         if($eventPoint->getMode() !== 'after') return true;
 
         $path = getRequest('path');
-
         if(!$path || strpos($path, 'emarket/basket/') === false) return true;
 
         $order = $eventPoint->getRef('order');
 
-        if($order->getValue('status_id')) return true;
-
         $permissions = permissionsCollection::getInstance();
         $visitorUid = ($permissions->isAuth()) ? $order->getValue('customer_id') : false;
 
-        $api = $this->getConveadTracker($visitorUid);
+        $api = $this->convead->getConveadTracker($visitorUid);
 
         /* блокировать отправку события update_cart для ложных вызовов */
         if ($api->generated_uid) return false;
@@ -46,9 +52,9 @@ abstract class __convead_events {
         $newStatusId = $eventPoint->getParam('new-status-id');
         $order = $eventPoint->getRef('order');
 
-        $state = $this->switchState( order::getCodeByStatus($newStatusId) );
+        $state = $this->convead->switchState( order::getCodeByStatus($newStatusId) );
 
-        $orderData = $this->getOrderData($order);
+        $orderData = $this->convead->getOrderData($order);
 
         if(!is_null($oldStatusId) or $newStatusId == order::getStatusByCode('waiting')) {
             $customerId = $order->getValue('purchaser_one_click');
@@ -60,16 +66,16 @@ abstract class __convead_events {
 
             if(!$customer) return true;
 
-            $visitorInfo = ($customer) ? $this->getConveadVisitorInfo($customer) : false;
+            $visitorInfo = ($customer) ? $this->convead->getConveadVisitorInfo($customer) : false;
 
             if(!permissionsCollection::getInstance()->isAuth()) $visitorUid = false;
 
-            $tracker = $this->getConveadTracker($visitorUid, $visitorInfo);
+            $tracker = $this->convead->getConveadTracker($visitorUid, $visitorInfo);
             if(!$tracker) return true;
             $tracker->eventOrder($orderData->order_id, $orderData->revenue, $orderData->items, $orderData->state);
         }
         else {
-            $tracker = $this->getConveadTrackerAnonym();
+            $tracker = $this->convead->getConveadTrackerAnonym();
             if(!$tracker) return true;
             $tracker->webHookOrderUpdate($orderData->order_id, $orderData->state, $orderData->revenue, $orderData->items);
         }
@@ -84,11 +90,11 @@ abstract class __convead_events {
         
         if($object instanceof iUmiObject) {
             $order = order::get($object->getId());
-            $orderData = $this->getOrderData($order);
+            $orderData = $this->convead->getOrderData($order);
 
-            #$state = $this->switchState( order::getCodeByStatus($object->getId()) );
+            #$state = $this->convead->switchState( order::getCodeByStatus($object->getId()) );
 
-            $tracker = $this->getConveadTrackerAnonym();
+            $tracker = $this->convead->getConveadTrackerAnonym();
             if(!$tracker) return true;
 
             $tracker->webHookOrderUpdate($orderData->order_id, $orderData->state, $orderData->revenue, $orderData->items);
@@ -104,15 +110,16 @@ abstract class __convead_events {
 
         if($entity instanceof iUmiObject) {
             $order = order::get($entity->getId());
-            $orderData = $this->getOrderData($order);
-            #$state = $this->switchState( order::getCodeByStatus($event->getParam("newValue")) );
+            $orderData = $this->convead->getOrderData($order);
+            #$state = $this->convead->switchState( order::getCodeByStatus($event->getParam("newValue")) );
 
-            $tracker = $this->getConveadTrackerAnonym();
+            $tracker = $this->convead->getConveadTrackerAnonym();
             if(!$tracker) return true;
 
             $tracker->webHookOrderUpdate($orderData->order_id, $orderData->state);
         }
         return true;
     }
-
+    
 };
+?>

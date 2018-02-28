@@ -1,5 +1,6 @@
 <?php
-abstract class __convead_library {
+class ConveadLibrary {
+
     public function getConveadScript() {
         $key = $this->getConveadAppKey();
 
@@ -230,5 +231,11 @@ END;
         $orderData->state = $this->switchState( order::getCodeByStatus($order->getValue('status_id')) );
         return $orderData;
     }
+    
+	public function getConveadAppKey() {
+		$regedit = regedit::getInstance();
+
+		return $regedit->getVal('//modules/convead/app_key');
+	}
 
 };

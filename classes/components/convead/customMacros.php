@@ -1,5 +1,7 @@
 <?php
-	abstract class __custom_convead {
+
+class ConveadCustomMacros {
 		//TODO: Write here your own macroses
-	};
+};
+
 ?>

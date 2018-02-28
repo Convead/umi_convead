@@ -1,6 +1,6 @@
 <?php
 
-$i18n = Array(
+$i18n = [
 	'module-convead' => 'Convead',
 
 	'header-convead-config' => 'Настройки',
@@ -8,4 +8,4 @@ $i18n = Array(
 	'option-app_key' => 'APP KEY вашего аккаунта convead',
 
 	'perms-convead-convead' => 'Отправка данных в convead'
-);
+];
