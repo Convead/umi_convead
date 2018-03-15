@@ -6,9 +6,9 @@
     <lang><![CDATA[ru]]></lang>
     <source-name><![CDATA[convead]]></source-name>
     <generate-time>
-      <timestamp>1520864277</timestamp>
-      <rfc>Mon, 12 Mar 2018 17:17:57 +0300</rfc>
-      <utc>2018-03-12T17:17:57+03:00</utc>
+      <timestamp>1521101054</timestamp>
+      <rfc>Thu, 15 Mar 2018 11:04:14 +0300</rfc>
+      <utc>2018-03-15T11:04:14+03:00</utc>
     </generate-time>
   </meta>
   <registry>
@@ -27,12 +27,12 @@
     <directory path="./styles/skins/mac/data/modules/convead" name="convead">/styles/skins/mac/data/modules/convead</directory>
   </directories>
   <files>
-    <file path="./classes/components/convead/convead.php" size="6986" ext="php" hash="7766995f19ad3327f4705bef3a6bfd42" name="convead.php">/classes/components/convead/convead.php</file>
+    <file path="./classes/components/convead/convead.php" size="7051" ext="php" hash="10b621b9cf95683aa255dfcf84277bc4" name="convead.php">/classes/components/convead/convead.php</file>
     <file path="./classes/components/convead/customMacros.php" size="80" ext="php" hash="a1cb42d5507adb7eef83b5f87aa12962" name="customMacros.php">/classes/components/convead/customMacros.php</file>
     <file path="./classes/components/convead/class.php" size="1246" ext="php" hash="e3e6891b2dbf05457ff25dcbbfba2f28" name="class.php">/classes/components/convead/class.php</file>
     <file path="./classes/components/convead/i18n.php" size="294" ext="php" hash="3e07f29b1189765fec0498a81d50dfa6" name="i18n.php">/classes/components/convead/i18n.php</file>
     <file path="./classes/components/convead/admin.php" size="1092" ext="php" hash="4717b075c21568088eea2d5d29ec09af" name="admin.php">/classes/components/convead/admin.php</file>
-    <file path="./classes/components/convead/macros.php" size="4603" ext="php" hash="89a1c8a21054d3f9da043c00aa043eea" name="macros.php">/classes/components/convead/macros.php</file>
+    <file path="./classes/components/convead/macros.php" size="4783" ext="php" hash="553620af0b0c3a7bbf471b22f4aae5ca" name="macros.php">/classes/components/convead/macros.php</file>
     <file path="./classes/components/convead/install.php" size="748" ext="php" hash="d517563fce074fdb520046001a9d5f73" name="install.php">/classes/components/convead/install.php</file>
     <file path="./classes/components/convead/customAdmin.php" size="91" ext="php" hash="03ef6725c0ed008c7a3cf0c40107466c" name="customAdmin.php">/classes/components/convead/customAdmin.php</file>
     <file path="./classes/components/convead/lang.php" size="164" ext="php" hash="c4513fb07c634232b53b7e6867581068" name="lang.php">/classes/components/convead/lang.php</file>

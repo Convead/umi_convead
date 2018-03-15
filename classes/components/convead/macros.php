@@ -2,7 +2,7 @@
 
 class ConveadMacros {
 
-	public $module;
+    public $module;
 
     public function __construct($module) {
         $this->module = is_null($this->module) ? $module : $this->module;
@@ -53,8 +53,10 @@ class ConveadMacros {
         $order = $eventPoint->getRef('order');
 
         $state = $this->convead->switchState( order::getCodeByStatus($newStatusId) );
-
+        
         $orderData = $this->convead->getOrderData($order);
+        
+        if(!$orderData) return true;
 
         if(!is_null($oldStatusId) or $newStatusId == order::getStatusByCode('waiting')) {
             $customerId = $order->getValue('purchaser_one_click');
@@ -91,6 +93,8 @@ class ConveadMacros {
         if($object instanceof iUmiObject) {
             $order = order::get($object->getId());
             $orderData = $this->convead->getOrderData($order);
+            
+            if (!$orderData) return true;
 
             #$state = $this->convead->switchState( order::getCodeByStatus($object->getId()) );
 
@@ -111,6 +115,9 @@ class ConveadMacros {
         if($entity instanceof iUmiObject) {
             $order = order::get($entity->getId());
             $orderData = $this->convead->getOrderData($order);
+            
+            if (!$orderData) return true;
+            
             #$state = $this->convead->switchState( order::getCodeByStatus($event->getParam("newValue")) );
 
             $tracker = $this->convead->getConveadTrackerAnonym();

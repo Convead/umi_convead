@@ -36,10 +36,10 @@ END;
                 $viewProductScript = <<<END
 <script type="text/javascript">
   convead('event', 'view_product', {
-	product_id: '{$productId}',
-	category_id: '{$categoryId}',
-	product_name: '{$productName}',
-	product_url: '{$productUrl}'
+    product_id: '{$productId}',
+    category_id: '{$categoryId}',
+    product_name: '{$productName}',
+    product_url: '{$productUrl}'
   });
 </script>
 END;
@@ -215,6 +215,7 @@ END;
      * @return orderData
      */
     public function getOrderData($order) {
+        if (!$order) return false;
         $orderData = new stdClass();
         $items = $order->getItems();
         $conveadItems = array();
@@ -232,10 +233,10 @@ END;
         return $orderData;
     }
     
-	public function getConveadAppKey() {
-		$regedit = regedit::getInstance();
+    public function getConveadAppKey() {
+        $regedit = regedit::getInstance();
 
-		return $regedit->getVal('//modules/convead/app_key');
-	}
+        return $regedit->getVal('//modules/convead/app_key');
+    }
 
 };
